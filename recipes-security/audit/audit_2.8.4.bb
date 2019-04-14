@@ -10,7 +10,8 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=94d55d512a9ba36caa9b7df079bae19f"
 SRC_URI = "http://people.redhat.com/sgrubb/${BPN}/${BPN}-${PV}.tar.gz \
            file://audit-python-configure.patch \
            file://audit-python.patch \
-           file://fix-swig-host-contamination.patch \
+           file://audit-2.7.1-swig.patch \
+           file://audit-2.8.2-musl.patch \
            file://auditd \
            file://auditd.service \
            file://audit-volatile.conf \
@@ -73,6 +74,7 @@ RDEPENDS_auditd += "bash"
 do_install_append() {
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.a
 	rm -f ${D}/${libdir}/python${PYTHON_BASEVERSION}/site-packages/*.la
+	rm -rf ${D}/usr/lib/golang
 
 	# reuse auditd config
 	[ ! -e ${D}/etc/default ] && mkdir ${D}/etc/default
